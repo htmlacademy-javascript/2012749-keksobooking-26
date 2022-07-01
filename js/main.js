@@ -8,7 +8,7 @@ function randomInt(min, max) {
   }
   else {
     if (min>max) { //Минимальное число больше максимального, находим диапазон от min до max
-      let mid = min;
+      const mid = min;
       min = max;
       max = mid;
     }
@@ -25,11 +25,11 @@ function randomFloat(min, max, point) {
   }
   else {
     if (min>max) { //Минимальное число больше максимального, находим диапазон от min до max
-      let mid = min;
+      const mid = min;
       min = max;
       max = mid;
     }
-    let result = Math.random() * (max - min + 1) + min;
+    const result = Math.random() * (max - min + 1) + min;
     return result.toFixed(point);
   }
 }
