@@ -7,11 +7,10 @@ function randomInt(min, max) {
     return `Минимальное и максимальное число равны. Единственный подходящий ответ: ${min}`;
   }
   else {
-    if (min>max) {
+    if (min>max) { //Минимальное число больше максимального, находим диапазон от min до max
       let mid = min;
       min = max;
       max = mid;
-      console.log(`Минимальное число больше максимального, находим диапазон от ${min} до ${max}`);
     }
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
@@ -25,11 +24,10 @@ function randomFloat(min, max, point) {
     return `Минимальное и максимальное число равны. Единственный подходящий ответ: ${min}`;
   }
   else {
-    if (min>max) {
+    if (min>max) { //Минимальное число больше максимального, находим диапазон от min до max
       let mid = min;
       min = max;
       max = mid;
-      console.log(`Минимальное число больше максимального, находим диапазон от ${min} до ${max}`);
     }
     let result = Math.random() * (max - min + 1) + min;
     return result.toFixed(point);
