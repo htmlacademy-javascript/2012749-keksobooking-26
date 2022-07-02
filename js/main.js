@@ -4,16 +4,16 @@
 
 function randomInt(min, max) {
   if (max===min) {
-    return `Минимальное и максимальное число равны. Единственный подходящий ответ: ${min}`;
+    // eslint-disable-next-line no-console
+    console.log(`randomInt: Минимальное и максимальное число равны. Единственный подходящий ответ: ${min}`);
+    return -1;
   }
-  else {
-    if (min>max) { //Минимальное число больше максимального, находим диапазон от min до max
-      const mid = min;
-      min = max;
-      max = mid;
-    }
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  if (min>max) { //Минимальное число больше максимального
+    // eslint-disable-next-line no-console
+    console.error('randomInt: Минимальное число больше максимального');
+    return -1;
   }
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // Функция, возвращающая случайное число с плавающей точкой из переданного диапазона включительно.
@@ -21,18 +21,18 @@ function randomInt(min, max) {
 
 function randomFloat(min, max, point) {
   if (max===min) {
-    return `Минимальное и максимальное число равны. Единственный подходящий ответ: ${min}`;
+    // eslint-disable-next-line no-console
+    console.log(`randomFloat: Минимальное и максимальное число равны. Единственный подходящий ответ: ${min}`);
+    return -1;
   }
-  else {
-    if (min>max) { //Минимальное число больше максимального, находим диапазон от min до max
-      const mid = min;
-      min = max;
-      max = mid;
-    }
-    const result = Math.random() * (max - min + 1) + min;
-    return result.toFixed(point);
+  if (min>max) { //Минимальное число больше максимального
+    // eslint-disable-next-line no-console
+    console.error('randomFloat: Минимальное число больше максимального');
+    return -1;
   }
+  const result = Math.random() * (max - min + 1) + min;
+  return result.toFixed(point);
 }
 
-randomInt();
-randomFloat();
+randomInt(1, 10);
+randomFloat(1, 10, 5);
