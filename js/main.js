@@ -70,7 +70,7 @@ const TITLES = [
   'Скидка при аренде на 10+ дней'
 ];
 
-const TYPE = [
+const TYPES = [
   'palace',
   'flat',
   'house',
@@ -78,7 +78,7 @@ const TYPE = [
   'hotel'
 ];
 
-const CHECK_TIME = [
+const CHECK_TIMES = [
   '12:00',
   '13:00',
   '14:00'
@@ -133,8 +133,19 @@ const getRandomAvatar = () => {
 };
 
 const createAds = () => {
-  const x = getRandomPositiveFloat(35.65000, 35.70000, 5);
-  const y = getRandomPositiveFloat(139.70000, 139.80000, 5);
+  const MIN_LAT = 35.65000;
+  const MAX_LAT = 35.70000;
+  const MIN_LNG = 139.70000;
+  const MAX_LNG = 139.80000;
+  const N_DIGITS = 5;
+  const MIN_PRICE = 1000;
+  const MAX_PRICE = 10000;
+  const MIN_ROOMS = 1;
+  const MAX_ROOMS = 5;
+  const MIN_GUESTS = 1;
+  const MAX_GUESTS = 10;
+  const x = getRandomPositiveFloat(MIN_LAT, MAX_LAT, N_DIGITS);
+  const y = getRandomPositiveFloat(MIN_LNG, MAX_LNG, N_DIGITS);
   return {
     author: {
       avatar: getRandomAvatar(),
@@ -142,12 +153,12 @@ const createAds = () => {
     offer: {
       title: getRandomArrayElement(TITLES),
       address: `${x}, ${y}`,
-      price: getRandomPositiveInteger(1000, 10000),
-      type: getRandomArrayElement(TYPE),
-      rooms: getRandomPositiveInteger(1, 5),
-      guests: getRandomPositiveInteger(1, 10),
-      checkin: getRandomArrayElement(CHECK_TIME),
-      checkout: getRandomArrayElement(CHECK_TIME),
+      price: getRandomPositiveInteger(MIN_PRICE, MAX_PRICE),
+      type: getRandomArrayElement(TYPES),
+      rooms: getRandomPositiveInteger(MIN_ROOMS, MAX_ROOMS),
+      guests: getRandomPositiveInteger(MIN_GUESTS, MAX_GUESTS),
+      checkin: getRandomArrayElement(CHECK_TIMES),
+      checkout: getRandomArrayElement(CHECK_TIMES),
       features: getArray(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
       photos: getArray(PHOTOS)
