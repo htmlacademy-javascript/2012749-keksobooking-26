@@ -17,6 +17,7 @@ const MIN_ROOMS = 1;
 const MAX_ROOMS = 5;
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 10;
+const MAX_AVATAR_NUM = 10;
 
 const TITLES = [
   'Лучший выбор по мнению агентов',
@@ -69,8 +70,8 @@ const PHOTOS = [
 ];
 
 const getRandomAvatar = () => {
-  const result = Math.random() * (10 - 1) + 1; // Рандомное число от 1 до 10
-  return `img/avatars/user${(result < 10 ? '0' : '') + (result + 1)}.png`;
+  const result = Math.random() * (MAX_AVATAR_NUM - 1) + 1; // Рандомное число от 1 до 10
+  return `img/avatars/user${(result < MAX_AVATAR_NUM ? '0' : '') + (result + 1)}.png`;
 };
 
 const createAds = () => {
