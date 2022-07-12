@@ -17,6 +17,7 @@ const MIN_ROOMS = 1;
 const MAX_ROOMS = 5;
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 10;
+const MAX_AVATAR_NUM = 11;
 
 const TITLES = [
   'Лучший выбор по мнению агентов',
@@ -59,6 +60,7 @@ const DESCRIPTIONS = [
   'Жилье в отличном районе, недалеко располагается живописный парк.',
   'Квартира с самым красивым панорамным видом в городе!',
   'Толстые стены дома обеспечат вам максимальную тишину во время отдыха.',
+  '',
   'Аппартаменты располагаются в гастрономическом квартале города, лучшие рестораны и кофейни буквально за углом!'
 ];
 
@@ -69,8 +71,8 @@ const PHOTOS = [
 ];
 
 const getRandomAvatar = () => {
-  const result = Math.random() * (10 - 1) + 1; // Рандомное число от 1 до 10
-  return `img/avatars/user${(result < 10 ? '0' : '') + (result + 1)}.png`;
+  const result = Math.floor(Math.random() * MAX_AVATAR_NUM) + 1; // Рандомное число от 1 до 10
+  return `../img/avatars/user${(result < 10 ? '0' : '') + result}.png`;
 };
 
 const createAds = () => {
