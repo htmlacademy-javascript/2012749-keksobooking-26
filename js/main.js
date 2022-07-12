@@ -1,2 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import {cardRender} from './card.js';
+/* eslint-disable no-unused-vars */
+import { cardRender } from './card.js';
+import { pageDisabled, pageActive } from './form.js';
