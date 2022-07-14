@@ -39,6 +39,7 @@ const activatePage = () => {
 activatePage();
 
 export{
+  form,
   disablePage,
   activatePage
 };

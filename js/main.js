@@ -1,3 +1,4 @@
 /* eslint-disable no-unused-vars */
 import { cardRender } from './card.js';
-import { pageDisabled, pageActive } from './form.js';
+import { disablePage, activatePage } from './form-status.js';
+import './form-validation.js';
