@@ -12,11 +12,11 @@ const MIN_LNG = 139.70000;
 const MAX_LNG = 139.80000;
 const N_DIGITS = 5;
 const MIN_PRICE = 1000;
-const MAX_PRICE = 10000;
+const MAX_PRICE = 20000;
 const MIN_ROOMS = 1;
 const MAX_ROOMS = 5;
 const MIN_GUESTS = 1;
-const MAX_GUESTS = 10;
+const MAX_GUESTS = 5;
 const MAX_AVATAR_NUM = 11;
 
 const TITLES = [

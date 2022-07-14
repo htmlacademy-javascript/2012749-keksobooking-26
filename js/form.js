@@ -4,7 +4,7 @@ const mapFilters = document.querySelector('.map__filters');
 const mapFilterSelect = mapFilters.querySelectorAll('select');
 const mapFilterFieldset = mapFilters.querySelectorAll('fieldset');
 
-const pageDisabled = () => {
+const disablePage = () => {
   form.classList.add('ad-form--disabled');
   mapFilters.classList.add('map__filters--disabled');
 
@@ -19,9 +19,9 @@ const pageDisabled = () => {
   } );
 };
 
-pageDisabled();
+disablePage();
 
-const pageActive = () => {
+const activatePage = () => {
   form.classList.remove('ad-form--disabled');
   mapFilters.classList.remove('map__filters--disabled');
 
@@ -36,9 +36,9 @@ const pageActive = () => {
   } );
 };
 
-pageActive();
+activatePage();
 
 export{
-  pageDisabled,
-  pageActive
+  disablePage,
+  activatePage
 };
