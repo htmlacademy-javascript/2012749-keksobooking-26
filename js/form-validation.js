@@ -33,6 +33,12 @@ const minTypePrice = {
   'house': 5000,
   'palace': 10000,
 };
+const capacityErrorMessage = {
+  '1': 'Одна комната - один гость',
+  '2': 'Две комнаты - от одного до двух гостей',
+  '3': 'Три комнаты - от одного до трёх гостей',
+  '100': 'Не для гостей',
+};
 
 const validateTitle = () => titleForm.value.length >= MIN_TITLE_LENGTH && titleForm.value.length <= MAX_TITLE_LENGTH;
 
@@ -42,41 +48,17 @@ const validateCapacityNum = () => roomsCapacity[roomNumForm.value].includes(capa
 
 const validateTypePrice = () => minTypePrice[typeForm.value] <= priceForm.value;
 
-const getCapacityErrorMessage = () => {
-  switch(roomNumForm.value) {
-    case '1':
-      return 'Одна комната - один гость';
-    case '2':
-      return 'Две комнаты - от одного до двух гостей';
-    case '3':
-      return 'Три комнаты - от одного до трёх гостей';
-    case '100':
-      return 'Не для гостей';
-  }
-};
+const getCapacityErrorMessage = () => capacityErrorMessage[roomNumForm.value];
 
-const getTypeErrorMessage = () => {
-  switch(typeForm.value) {
-    case 'bungalow':
-      return `Минимальная цена за ночь: ${minTypePrice['bungalow']} рублей.`;
-    case 'flat':
-      return `Минимальная цена за ночь: ${minTypePrice['flat']} рублей.`;
-    case 'hotel':
-      return `Минимальная цена за ночь: ${minTypePrice['hotel']} рублей.`;
-    case 'house':
-      return `Минимальная цена за ночь: ${minTypePrice['house']} рублей.`;
-    case 'palace':
-      return `Минимальная цена за ночь: ${minTypePrice['palace']} рублей.`;
-  }
-};
+const getTypeErrorMessage = () => `Минимальная цена за ночь: ${minTypePrice[typeForm.value]} рублей.`;
 
-function roomCapacityChange () {
+const roomCapacityChange = () => {
   pristineForm.validate(roomNumForm);
-}
+};
 
-function typePriceChange () {
+const typePriceChange = () => {
   pristineForm.validate(typeForm);
-}
+};
 
 pristineForm.addValidator(titleForm, validateTitle, `От ${MIN_TITLE_LENGTH} до ${MAX_TITLE_LENGTH} символов.`);
 pristineForm.addValidator(priceForm, validatePrice, `Максимальная цена за ночь ${MAX_PRICE_VALUE}.`);
