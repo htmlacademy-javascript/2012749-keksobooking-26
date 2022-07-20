@@ -87,10 +87,10 @@ const createPinAd = (ad, layer = map) => {
   return marker;
 };
 
-const createMarkerGroup = (ads) => {
+const createPinGroup = (ads) => {
   const markerGroup = L.layerGroup().addTo(map);
   ads.forEach((ad) => createPinAd(ad, markerGroup));
   return markerGroup;
 };
 
-export {resetMainPin, createPinAd, createMarkerGroup};
+export {resetMainPin, createPinAd, createPinGroup};
