@@ -1,13 +1,21 @@
 const sliderElement = document.querySelector('.ad-form__slider');
 const valueElement = document.querySelector('#price');
 
+const sliderRange = {
+  min: 0,
+  max: 100000,
+};
+
+const sliderStart = 1000;
+const sliderStep = 10;
+
 noUiSlider.create(sliderElement, {
   range: {
-    min: 0,
-    max: 100000,
+    min: sliderRange.min,
+    max: sliderRange.max,
   },
-  start: 1000,
-  step: 1,
+  start: sliderStart,
+  step: sliderStep,
   connect: 'lower',
 });
 
