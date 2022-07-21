@@ -1,7 +1,9 @@
 import {
+  // eslint-disable-next-line no-unused-vars
   similarAds
 } from './ad-data.js';
 
+// eslint-disable-next-line no-unused-vars
 const map = document.querySelector('.map__canvas');
 const cardTemplate = document.querySelector('#card').content;
 const popupCard = cardTemplate.querySelector('.popup');
@@ -67,8 +69,6 @@ const cardRender = (element) => {
   renderPhotos(element.offer.photos, card.querySelector('.popup__photos'));
   return card;
 };
-
-map.appendChild(cardRender(similarAds[0]));
 
 export {
   cardRender
