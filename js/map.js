@@ -9,17 +9,26 @@ const TOKYO = {
 };
 
 const ZOOM_MAP = 12;
+const MAIN_PIN_WIDTH = 52;
+const MAIN_PIN_HEIGHT = 52;
+const MAIN_PIN_POSITION_X = 26;
+const MAIN_PIN_POSITION_Y = 52;
+
+const PIN_WIDTH = 40;
+const PIN_HEIGHT = 40;
+const PIN_POSITION_X = 20;
+const PIN_POSITION_Y = 40;
 
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT],
+  iconAnchor: [MAIN_PIN_POSITION_X, MAIN_PIN_POSITION_Y],
 });
 
 const pinIcon = L.icon({
   iconUrl: 'img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [PIN_WIDTH, PIN_HEIGHT],
+  iconAnchor: [PIN_POSITION_X, PIN_POSITION_Y],
 });
 
 const map = L.map('map-canvas')
@@ -42,6 +51,8 @@ const mainPinMarker = L.marker(
 );
 
 const addressForm = form.querySelector('#address');
+addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
+addressForm.readOnly = true;
 
 const resetButton = document.querySelector('button[type="reset"]');
 

@@ -80,3 +80,5 @@ form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristineForm.validate();
 });
+
+export {minTypePrice};
