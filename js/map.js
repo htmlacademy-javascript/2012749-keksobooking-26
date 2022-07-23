@@ -1,7 +1,10 @@
 import {activatePage, form} from './form-status.js';
 import {cardRender} from './card.js';
+import {createLoader} from './server.js';
+import {showMapError} from './show-error.js';
 
 const COORDINATE_ROUNDING = 5;
+const SIMILAR_AD_COUNT = 10;
 
 const TOKYO = {
   lat: 35.69034,
@@ -31,11 +34,16 @@ const pinIcon = L.icon({
   iconAnchor: [PIN_POSITION_X, PIN_POSITION_Y],
 });
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-    activatePage();
+const map = L.map('map-canvas');
+
+const getMap = (callBackFunction) => {
+  map.on('load', () => {
+    callBackFunction();
   })
-  .setView(TOKYO, ZOOM_MAP);
+    .setView(
+      TOKYO,
+      ZOOM_MAP);
+};
 
 const LeafletParameters = {
   TILE_LAYER: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -104,4 +112,11 @@ const createPinGroup = (ads) => {
   return markerGroup;
 };
 
-export {resetMainPin, createPinAd, createPinGroup};
+getMap(() => {
+  activatePage();
+  createLoader((json) => {
+    createPinGroup(json.slice(0, SIMILAR_AD_COUNT));
+  }, (error) => showMapError(error));
+});
+
+export {resetMainPin, createPinAd, createPinGroup, map, TOKYO, ZOOM_MAP, mainPinMarker, addressForm};
