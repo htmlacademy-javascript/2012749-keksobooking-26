@@ -1,10 +1,4 @@
-import {
-  // eslint-disable-next-line no-unused-vars
-  similarAds
-} from './ad-data.js';
 
-// eslint-disable-next-line no-unused-vars
-const map = document.querySelector('.map__canvas');
 const cardTemplate = document.querySelector('#card').content;
 const popupCard = cardTemplate.querySelector('.popup');
 const PHOTO_WIDTH = 45;
