@@ -1,6 +1,6 @@
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif'];
 
-const IMG_DEFAULT = {
+const AVATAR_DEFAULT = {
   DESCRIPTION: 'Фото',
   SRC: 'img/muffin-grey.svg',
 };
@@ -19,7 +19,7 @@ const photoForm = form.querySelector('.ad-form__input');
 const photoPreviewForm = form.querySelector('.ad-form__photo').appendChild(document.createElement('img'));
 
 const resetPreview = () => {
-  avatarPreviewForm.src = IMG_DEFAULT.SRC;
+  avatarPreviewForm.src = AVATAR_DEFAULT.SRC;
   avatarPreviewForm.width = MUFFIN_WIDTH;
   avatarPreviewForm.height = MUFFIN_HEIGHT;
   photoPreviewForm.remove();
@@ -29,9 +29,9 @@ const renderPreview = (fileChoose, previewElement) => {
   fileChoose.addEventListener('change', () => {
     const file = fileChoose.files[0];
     const fileName = file.name.toLowerCase();
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const rightType = FILE_TYPES.some((it) => fileName.endsWith(it));
 
-    if (matches) {
+    if (rightType) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         previewElement.width = PREVIEW_WIDTH;
