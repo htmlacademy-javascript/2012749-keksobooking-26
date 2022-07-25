@@ -2,6 +2,7 @@ import {activatePage, form} from './form-status.js';
 import {cardRender} from './card.js';
 import {createLoader} from './server.js';
 import {showMapError} from './show-error.js';
+import {minTypePrice} from './form-validation.js';
 
 const COORDINATE_ROUNDING = 5;
 const SIMILAR_AD_COUNT = 10;
@@ -62,7 +63,22 @@ const addressForm = form.querySelector('#address');
 addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
 addressForm.readOnly = true;
 
-const resetButton = document.querySelector('button[type="reset"]');
+const filterMap = document.querySelector('.map__filters');
+const price = document.querySelector('#price');
+const type = document.querySelector('#type');
+
+const setDefaultState = () => {
+  form.reset();
+  filterMap.reset();
+  mainPinMarker.setLatLng(
+    TOKYO,
+  );
+  map.setView(
+    TOKYO,
+    ZOOM_MAP);
+  addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
+  price.value = minTypePrice[type.value];
+};
 
 const resetMainPin = (marker) => {
   marker.setLatLng(TOKYO);
@@ -71,6 +87,7 @@ const resetMainPin = (marker) => {
 
 const getResetForm = () => {
   resetMainPin(mainPinMarker);
+  setDefaultState();
 };
 
 L.tileLayer(
@@ -82,6 +99,7 @@ L.tileLayer(
 
 mainPinMarker.addTo(map);
 
+const resetButton = document.querySelector('.ad-form__reset');
 resetButton.addEventListener('click', getResetForm);
 
 const updateAddress = (location) => {
@@ -119,4 +137,4 @@ getMap(() => {
   }, (error) => showMapError(error));
 });
 
-export {resetMainPin, createPinAd, createPinGroup, map, TOKYO, ZOOM_MAP, mainPinMarker, addressForm};
+export { setDefaultState };

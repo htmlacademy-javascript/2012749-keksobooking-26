@@ -2,7 +2,7 @@
 import { form } from './form-status.js';
 import { sendForm } from './server.js';
 import { showSuccessPopup, showErrorPopup } from './form-popup.js';
-import { map, ZOOM_MAP, TOKYO, mainPinMarker, addressForm } from './map.js';
+import { setDefaultState } from './map.js';
 
 const pristineForm = new Pristine(form, {
   classTo: 'ad-form__element', // Элемент, на который будут добавляться классы
@@ -13,7 +13,6 @@ const pristineForm = new Pristine(form, {
   errorTextClass: 'ad-form__error' // Класс для элемента с текстом ошибки
 });
 
-const filterMap = document.querySelector('.map__filters');
 const titleForm = form.querySelector('#title');
 const priceForm = form.querySelector('#price');
 const roomNumForm = form.querySelector('#room_number');
@@ -79,18 +78,6 @@ timeinForm.addEventListener('change', () => {
 timeoutForm.addEventListener('change', () => {
   timeinForm.value = timeoutForm.value;
 });
-
-const setDefaultState = () => {
-  form.reset();
-  filterMap.reset();
-  mainPinMarker.setLatLng(
-    TOKYO,
-  );
-  map.setView(
-    TOKYO,
-    ZOOM_MAP);
-  addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
-};
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
