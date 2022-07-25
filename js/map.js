@@ -3,6 +3,7 @@ import {cardRender} from './card.js';
 import {createLoader} from './server.js';
 import {showMapError} from './show-error.js';
 import {minTypePrice} from './form-validation.js';
+import {resetPreview} from './preview-photo.js';
 
 const COORDINATE_ROUNDING = 5;
 const SIMILAR_AD_COUNT = 10;
@@ -86,6 +87,7 @@ const resetMainPin = (marker) => {
 };
 
 const getResetForm = () => {
+  resetPreview();
   resetMainPin(mainPinMarker);
   setDefaultState();
 };
