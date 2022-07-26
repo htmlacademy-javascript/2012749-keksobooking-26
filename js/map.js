@@ -4,6 +4,8 @@ import {createLoader} from './server.js';
 import {showMapError} from './show-error.js';
 import {minTypePrice} from './form-validation.js';
 import {resetPreview} from './preview-photo.js';
+import {checkFilters,changeFilters} from './filter.js';
+import {debounce} from './util.js';
 
 const COORDINATE_ROUNDING = 5;
 const SIMILAR_AD_COUNT = 10;
@@ -114,28 +116,38 @@ mainPinMarker.on('moveend', (evt) => {
   updateAddress(evt.target.getLatLng());
 });
 
-const createPinAd = (ad, layer = map) => {
+const markers = [];
+
+const createPinAd = (ad) => {
   const marker = L.marker(ad.location, {icon: pinIcon});
   marker
-    .addTo(layer)
+    .addTo(map)
     .bindPopup(cardRender(ad),
       {
         keepInView: true,
       },
     );
-  return marker;
+  return markers.push(marker);
+};
+
+const deletePins = () => {
+  markers.forEach((marker) => marker.remove());
 };
 
 const createPinGroup = (ads) => {
-  const markerGroup = L.layerGroup().addTo(map);
-  ads.forEach((ad) => createPinAd(ad, markerGroup));
-  return markerGroup;
+  ads.forEach((ad) => {
+    createPinAd(ad);
+  });
 };
 
 getMap(() => {
   activatePage();
   createLoader((json) => {
     createPinGroup(json.slice(0, SIMILAR_AD_COUNT));
+    changeFilters(debounce(() => {
+      deletePins();
+      createPinGroup(checkFilters(json));
+    }));
   }, (error) => showMapError(error));
 });
 
