@@ -104,7 +104,10 @@ L.tileLayer(
 mainPinMarker.addTo(map);
 
 const resetButton = document.querySelector('.ad-form__reset');
-resetButton.addEventListener('click', getResetForm);
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  getResetForm();
+});
 
 const updateAddress = (location) => {
   const lat = location.lat.toFixed(COORDINATE_ROUNDING);
