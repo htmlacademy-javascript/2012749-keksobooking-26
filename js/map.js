@@ -73,30 +73,6 @@ const filterMap = document.querySelector('.map__filters');
 const price = document.querySelector('#price');
 const type = document.querySelector('#type');
 
-const setDefaultState = () => {
-  form.reset();
-  filterMap.reset();
-  mainPinMarker.setLatLng(
-    TOKYO,
-  );
-  map.setView(
-    TOKYO,
-    ZOOM_MAP);
-  addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
-  price.value = minTypePrice[type.value];
-};
-
-const resetMainPin = (marker) => {
-  marker.setLatLng(TOKYO);
-  map.setView(TOKYO, ZOOM_MAP);
-};
-
-const getResetForm = () => {
-  resetPreview();
-  resetMainPin(mainPinMarker);
-  setDefaultState();
-};
-
 L.tileLayer(
   LeafletParameters.TILE_LAYER,
   {
@@ -105,12 +81,6 @@ L.tileLayer(
 ).addTo(map);
 
 mainPinMarker.addTo(map);
-
-const resetButton = document.querySelector('.ad-form__reset');
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  getResetForm();
-});
 
 const updateAddress = (location) => {
   const lat = location.lat.toFixed(COORDINATE_ROUNDING);
@@ -155,5 +125,36 @@ const uploadData = () => {
     }));
   }, (error) => showMapError(error));
 };
+
+const setDefaultState = () => {
+  markers.forEach((marker) => marker.bindPopup({keepInView: false,}));
+  form.reset();
+  filterMap.reset();
+  mainPinMarker.setLatLng(
+    TOKYO,
+  );
+  map.setView(
+    TOKYO,
+    ZOOM_MAP);
+  addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
+  price.value = minTypePrice[type.value];
+};
+
+const resetMainPin = (marker) => {
+  marker.setLatLng(TOKYO);
+  map.setView(TOKYO, ZOOM_MAP);
+};
+
+const getResetForm = () => {
+  resetPreview();
+  resetMainPin(mainPinMarker);
+  setDefaultState();
+};
+
+const resetButton = document.querySelector('.ad-form__reset');
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  getResetForm();
+});
 
 export { setDefaultState, getMap, uploadData };

@@ -30,6 +30,9 @@ const showErrorPopup = () => {
       errorPopup.remove();
     }
   });
+  document.addEventListener('click', () => {
+    errorPopup.remove();
+  });
   closeButton.addEventListener('click', () => {
     errorPopup.remove();
   });
