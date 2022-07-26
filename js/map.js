@@ -1,4 +1,3 @@
-import {activatePage, form} from './form-status.js';
 import {cardRender} from './card.js';
 import {createLoader} from './server.js';
 import {showMapError} from './show-error.js';
@@ -6,6 +5,7 @@ import {minTypePrice} from './form-validation.js';
 import {resetPreview} from './preview-photo.js';
 import {checkFilters,changeFilters} from './filter.js';
 import {debounce} from './util.js';
+import { activatePage } from './form-status.js';
 
 const COORDINATE_ROUNDING = 5;
 const SIMILAR_AD_COUNT = 10;
@@ -38,10 +38,13 @@ const pinIcon = L.icon({
   iconAnchor: [PIN_POSITION_X, PIN_POSITION_Y],
 });
 
+const form = document.querySelector('.ad-form');
+
 const map = L.map('map-canvas');
 
 const getMap = (callBackFunction) => {
   map.on('load', () => {
+    activatePage();
     callBackFunction();
   })
     .setView(
@@ -143,8 +146,7 @@ const createPinGroup = (ads) => {
   });
 };
 
-getMap(() => {
-  activatePage();
+const uploadData = () => {
   createLoader((json) => {
     createPinGroup(json.slice(0, SIMILAR_AD_COUNT));
     changeFilters(debounce(() => {
@@ -152,6 +154,6 @@ getMap(() => {
       createPinGroup(checkFilters(json));
     }));
   }, (error) => showMapError(error));
-});
+};
 
-export { setDefaultState };
+export { setDefaultState, getMap, uploadData };

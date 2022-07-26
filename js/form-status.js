@@ -19,8 +19,6 @@ const disablePage = () => {
   } );
 };
 
-disablePage();
-
 const activatePage = () => {
   form.classList.remove('ad-form--disabled');
   mapFilters.classList.remove('map__filters--disabled');

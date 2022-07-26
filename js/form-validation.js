@@ -1,9 +1,8 @@
-// eslint-disable-next-line no-unused-vars
-import { form } from './form-status.js';
 import { sendForm } from './server.js';
 import { showSuccessPopup, showErrorPopup } from './form-popup.js';
 import { setDefaultState } from './map.js';
 
+const form = document.querySelector('.ad-form');
 const pristineForm = new Pristine(form, {
   classTo: 'ad-form__element', // Элемент, на который будут добавляться классы
   errorClass: 'ad-form__element--invalid', // Класс, обозначающий невалидное поле
