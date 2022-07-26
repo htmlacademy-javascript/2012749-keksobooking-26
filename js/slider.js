@@ -24,9 +24,9 @@ noUiSlider.create(sliderElement, {
 
 type.addEventListener('change', () => {
   sliderElement.noUiSlider.set(minTypePrice[type.value]);
-  valueElement.value = Math.floor(sliderElement.noUiSlider.get());
+  valueElement.placeholder = Math.floor(sliderElement.noUiSlider.get());
 });
 
 sliderElement.noUiSlider.on('update', () => {
-  valueElement.value = Math.floor(sliderElement.noUiSlider.get());
+  valueElement.placeholder = Math.floor(sliderElement.noUiSlider.get());
 });

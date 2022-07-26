@@ -21,11 +21,14 @@ const disablePage = () => {
 
 const activatePage = () => {
   form.classList.remove('ad-form--disabled');
-  mapFilters.classList.remove('map__filters--disabled');
 
   formFieldset.forEach( (filter) => {
     filter.disabled = false;
   } );
+};
+
+const activateFilters = () => {
+  mapFilters.classList.remove('map__filters--disabled');
   mapFilterSelect.forEach( (filter) => {
     filter.disabled = false;
   } );
@@ -37,5 +40,6 @@ const activatePage = () => {
 export{
   form,
   disablePage,
-  activatePage
+  activatePage,
+  activateFilters
 };

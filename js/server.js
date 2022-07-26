@@ -1,3 +1,5 @@
+import {activateFilters} from './form-status.js';
+
 const DATA = 'https://26.javascript.pages.academy/keksobooking/data';
 const SERVER = 'https://26.javascript.pages.academy/keksobooking';
 
@@ -19,6 +21,7 @@ const createLoader = (onSuccess, onFail) => fetch(
   })
   .then((response) => {
     onSuccess(response);
+    activateFilters();
   })
   .catch((err) => {
     onFail(`Ошибка загрузки данных: ${err}`);
