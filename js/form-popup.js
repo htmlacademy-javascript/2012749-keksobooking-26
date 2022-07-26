@@ -7,7 +7,8 @@ const closeButton = errorPopup.querySelector('.error__button');
 const isEscEvent = (evt) => evt.key === ('Escape' || 'Esc');
 
 const showSuccessPopup = () => {
-  document.body.appendChild(successPopup);
+  const page = document.body;
+  page.appendChild(successPopup);
   document.addEventListener('keydown', (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
@@ -20,14 +21,17 @@ const showSuccessPopup = () => {
 };
 
 const showErrorPopup = () => {
-  errorPopup.remove();
+  const page = document.body;
   errorMessage.textContent = 'Ошибка загрузки данных';
-  document.body.appendChild(errorPopup);
+  page.appendChild(errorPopup);
   document.addEventListener('keydown', (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       errorPopup.remove();
     }
+  });
+  document.addEventListener('click', () => {
+    errorPopup.remove();
   });
   closeButton.addEventListener('click', () => {
     errorPopup.remove();

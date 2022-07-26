@@ -1,7 +1,11 @@
-import {activatePage, form} from './form-status.js';
 import {cardRender} from './card.js';
 import {createLoader} from './server.js';
 import {showMapError} from './show-error.js';
+import {minTypePrice} from './form-validation.js';
+import {resetPreview} from './preview-photo.js';
+import {checkFilters,changeFilters} from './filter.js';
+import {debounce} from './util.js';
+import { activatePage } from './form-status.js';
 
 const COORDINATE_ROUNDING = 5;
 const SIMILAR_AD_COUNT = 10;
@@ -34,10 +38,13 @@ const pinIcon = L.icon({
   iconAnchor: [PIN_POSITION_X, PIN_POSITION_Y],
 });
 
+const form = document.querySelector('.ad-form');
+
 const map = L.map('map-canvas');
 
 const getMap = (callBackFunction) => {
   map.on('load', () => {
+    activatePage();
     callBackFunction();
   })
     .setView(
@@ -62,16 +69,9 @@ const addressForm = form.querySelector('#address');
 addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
 addressForm.readOnly = true;
 
-const resetButton = document.querySelector('button[type="reset"]');
-
-const resetMainPin = (marker) => {
-  marker.setLatLng(TOKYO);
-  map.setView(TOKYO, ZOOM_MAP);
-};
-
-const getResetForm = () => {
-  resetMainPin(mainPinMarker);
-};
+const filterMap = document.querySelector('.map__filters');
+const price = document.querySelector('#price');
+const type = document.querySelector('#type');
 
 L.tileLayer(
   LeafletParameters.TILE_LAYER,
@@ -81,8 +81,6 @@ L.tileLayer(
 ).addTo(map);
 
 mainPinMarker.addTo(map);
-
-resetButton.addEventListener('click', getResetForm);
 
 const updateAddress = (location) => {
   const lat = location.lat.toFixed(COORDINATE_ROUNDING);
@@ -94,29 +92,69 @@ mainPinMarker.on('moveend', (evt) => {
   updateAddress(evt.target.getLatLng());
 });
 
-const createPinAd = (ad, layer = map) => {
+const markers = [];
+
+const createPinAd = (ad) => {
   const marker = L.marker(ad.location, {icon: pinIcon});
   marker
-    .addTo(layer)
+    .addTo(map)
     .bindPopup(cardRender(ad),
       {
         keepInView: true,
       },
     );
-  return marker;
+  return markers.push(marker);
+};
+
+const deletePins = () => {
+  markers.forEach((marker) => marker.remove());
 };
 
 const createPinGroup = (ads) => {
-  const markerGroup = L.layerGroup().addTo(map);
-  ads.forEach((ad) => createPinAd(ad, markerGroup));
-  return markerGroup;
+  ads.forEach((ad) => {
+    createPinAd(ad);
+  });
 };
 
-getMap(() => {
-  activatePage();
+const uploadData = () => {
   createLoader((json) => {
     createPinGroup(json.slice(0, SIMILAR_AD_COUNT));
+    changeFilters(debounce(() => {
+      deletePins();
+      createPinGroup(checkFilters(json));
+    }));
   }, (error) => showMapError(error));
+};
+
+const setDefaultState = () => {
+  markers.forEach((marker) => marker.bindPopup({keepInView: false,}));
+  form.reset();
+  filterMap.reset();
+  mainPinMarker.setLatLng(
+    TOKYO,
+  );
+  map.setView(
+    TOKYO,
+    ZOOM_MAP);
+  addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
+  price.value = minTypePrice[type.value];
+};
+
+const resetMainPin = (marker) => {
+  marker.setLatLng(TOKYO);
+  map.setView(TOKYO, ZOOM_MAP);
+};
+
+const getResetForm = () => {
+  resetPreview();
+  resetMainPin(mainPinMarker);
+  setDefaultState();
+};
+
+const resetButton = document.querySelector('.ad-form__reset');
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  getResetForm();
 });
 
-export {resetMainPin, createPinAd, createPinGroup, map, TOKYO, ZOOM_MAP, mainPinMarker, addressForm};
+export { setDefaultState, getMap, uploadData };
