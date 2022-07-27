@@ -3,6 +3,13 @@ const LOW_PRICE = 10000;
 const HIGH_PRICE = 50000;
 const ANY_VALUE = 'any';
 
+const priceValue = {
+  LOW: 'low',
+  MIDDLE: 'middle',
+  HIGH: 'high',
+  ANY: 'any',
+};
+
 const filters = document.querySelector('.map__filters');
 const typeFilter = filters.querySelector('#housing-type');
 const priceFilter = filters.querySelector('#housing-price');
@@ -14,13 +21,13 @@ const checkType = (data) => typeFilter.value === data.offer.type || typeFilter.v
 
 const checkPrice = (data) => {
   switch (priceFilter.value) {
-    case 'low':
+    case priceValue.LOW:
       return data.offer.price < LOW_PRICE;
-    case 'middle':
+    case priceValue.MIDDLE:
       return data.offer.price >= LOW_PRICE && data.offer.price <= HIGH_PRICE;
-    case 'high':
+    case priceValue.HIGH:
       return data.offer.price > HIGH_PRICE;
-    case 'any':
+    case priceValue.ANY:
       return true;
   }
 };

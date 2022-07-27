@@ -1,14 +1,14 @@
 const FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif'];
 
-const AVATAR_DEFAULT = {
-  DESCRIPTION: 'Фото',
-  SRC: 'img/muffin-grey.svg',
-};
-
 const PREVIEW_WIDTH = 70;
 const PREVIEW_HEIGHT = 70;
 const MUFFIN_WIDTH = 40;
 const MUFFIN_HEIGHT = 44;
+
+const avatarDefault = {
+  description: 'Фото',
+  src: 'img/muffin-grey.svg',
+};
 
 const form = document.querySelector('.ad-form');
 
@@ -19,7 +19,7 @@ const photoForm = form.querySelector('.ad-form__input');
 const photoPreviewForm = form.querySelector('.ad-form__photo').appendChild(document.createElement('img'));
 
 const resetPreview = () => {
-  avatarPreviewForm.src = AVATAR_DEFAULT.SRC;
+  avatarPreviewForm.src = avatarDefault.src;
   avatarPreviewForm.width = MUFFIN_WIDTH;
   avatarPreviewForm.height = MUFFIN_HEIGHT;
   photoPreviewForm.remove();

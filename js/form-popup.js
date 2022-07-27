@@ -9,14 +9,19 @@ const isEscEvent = (evt) => evt.key === ('Escape' || 'Esc');
 const showSuccessPopup = () => {
   const page = document.body;
   page.appendChild(successPopup);
-  document.addEventListener('keydown', (evt) => {
+
+  const  onKeydown = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       successPopup.remove();
+      document.removeEventListener('keydown', onKeydown);
     }
-  });
-  document.addEventListener('click', () => {
+  };
+
+  document.addEventListener('keydown', onKeydown);
+  successPopup.addEventListener('click', () => {
     successPopup.remove();
+    document.removeEventListener('keydown', onKeydown);
   });
 };
 
@@ -24,17 +29,23 @@ const showErrorPopup = () => {
   const page = document.body;
   errorMessage.textContent = 'Ошибка загрузки данных';
   page.appendChild(errorPopup);
-  document.addEventListener('keydown', (evt) => {
+
+  const onKeydown = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       errorPopup.remove();
+      document.removeEventListener('keydown', onKeydown);
     }
-  });
-  document.addEventListener('click', () => {
-    errorPopup.remove();
-  });
+  };
+
+  document.addEventListener('keydown', onKeydown);
   closeButton.addEventListener('click', () => {
     errorPopup.remove();
+    document.removeEventListener('keydown', onKeydown);
+  });
+  errorPopup.addEventListener('click', () => {
+    errorPopup.remove();
+    document.removeEventListener('keydown', onKeydown);
   });
 };
 
