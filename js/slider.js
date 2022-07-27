@@ -32,5 +32,5 @@ sliderElement.noUiSlider.on('update', () => {
   valueElement.value = Math.floor(sliderElement.noUiSlider.get());
 });
 
-valueElement.placeholder = 1000;
+valueElement.placeholder = minTypePrice[type.value];
 valueElement.value = '';
