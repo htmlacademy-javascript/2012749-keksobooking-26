@@ -3,7 +3,7 @@ const LOW_PRICE = 10000;
 const HIGH_PRICE = 50000;
 const ANY_VALUE = 'any';
 
-const priceValue = {
+const PriceValue = {
   LOW: 'low',
   MIDDLE: 'middle',
   HIGH: 'high',
@@ -21,13 +21,13 @@ const checkType = (data) => typeFilter.value === data.offer.type || typeFilter.v
 
 const checkPrice = (data) => {
   switch (priceFilter.value) {
-    case priceValue.LOW:
+    case PriceValue.LOW:
       return data.offer.price < LOW_PRICE;
-    case priceValue.MIDDLE:
+    case PriceValue.MIDDLE:
       return data.offer.price >= LOW_PRICE && data.offer.price <= HIGH_PRICE;
-    case priceValue.HIGH:
+    case PriceValue.HIGH:
       return data.offer.price > HIGH_PRICE;
-    case priceValue.ANY:
+    case PriceValue.ANY:
       return true;
   }
 };

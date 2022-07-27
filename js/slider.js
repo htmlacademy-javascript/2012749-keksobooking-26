@@ -24,9 +24,13 @@ noUiSlider.create(sliderElement, {
 
 type.addEventListener('change', () => {
   sliderElement.noUiSlider.set(minTypePrice[type.value]);
+  valueElement.value = '';
   valueElement.placeholder = Math.floor(sliderElement.noUiSlider.get());
 });
 
 sliderElement.noUiSlider.on('update', () => {
-  valueElement.placeholder = Math.floor(sliderElement.noUiSlider.get());
+  valueElement.value = Math.floor(sliderElement.noUiSlider.get());
 });
+
+valueElement.placeholder = 1000;
+valueElement.value = '';

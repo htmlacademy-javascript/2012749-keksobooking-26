@@ -6,6 +6,16 @@ const closeButton = errorPopup.querySelector('.error__button');
 
 const isEscEvent = (evt) => evt.key === ('Escape' || 'Esc');
 
+const removeSuccessPopup = (onKeydown) => {
+  successPopup.remove();
+  document.removeEventListener('keydown', onKeydown);
+};
+
+const removeErrorPopup = (onKeydown) => {
+  errorPopup.remove();
+  document.removeEventListener('keydown', onKeydown);
+};
+
 const showSuccessPopup = () => {
   const page = document.body;
   page.appendChild(successPopup);
@@ -13,15 +23,13 @@ const showSuccessPopup = () => {
   const  onKeydown = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
-      successPopup.remove();
-      document.removeEventListener('keydown', onKeydown);
+      removeSuccessPopup(onKeydown);
     }
   };
 
   document.addEventListener('keydown', onKeydown);
   successPopup.addEventListener('click', () => {
-    successPopup.remove();
-    document.removeEventListener('keydown', onKeydown);
+    removeSuccessPopup(onKeydown);
   });
 };
 
@@ -33,19 +41,16 @@ const showErrorPopup = () => {
   const onKeydown = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
-      errorPopup.remove();
-      document.removeEventListener('keydown', onKeydown);
+      removeErrorPopup(onKeydown);
     }
   };
 
   document.addEventListener('keydown', onKeydown);
   closeButton.addEventListener('click', () => {
-    errorPopup.remove();
-    document.removeEventListener('keydown', onKeydown);
+    removeErrorPopup(onKeydown);
   });
   errorPopup.addEventListener('click', () => {
-    errorPopup.remove();
-    document.removeEventListener('keydown', onKeydown);
+    removeErrorPopup(onKeydown);
   });
 };
 
