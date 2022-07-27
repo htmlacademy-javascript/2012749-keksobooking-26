@@ -1,11 +1,12 @@
+import {minTypePrice} from './form-validation.js';
 import {cardRender} from './card.js';
 import {createLoader} from './server.js';
 import {showMapError} from './show-error.js';
-import {minTypePrice} from './form-validation.js';
 import {resetPreview} from './preview-photo.js';
 import {checkFilters,changeFilters} from './filter.js';
 import {debounce} from './util.js';
 import { activatePage } from './form-status.js';
+import {sliderElement} from './slider.js';
 
 const COORDINATE_ROUNDING = 5;
 const SIMILAR_AD_COUNT = 10;
@@ -127,7 +128,9 @@ const setDefaultState = () => {
     TOKYO,
     ZOOM_MAP);
   addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
-  price.value = minTypePrice[type.value];
+  sliderElement.noUiSlider.reset();
+  price.value = '';
+  price.placeholder = minTypePrice[type.value];
   deletePins();
   createLoader((json) => {
     createPinGroup(json.slice(0, SIMILAR_AD_COUNT));
