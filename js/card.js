@@ -1,9 +1,5 @@
-
-const cardTemplate = document.querySelector('#card').content;
-const popupCard = cardTemplate.querySelector('.popup');
 const PHOTO_WIDTH = 45;
 const PHOTO_HEIGHT = 40;
-
 const typesOfHousing = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -11,6 +7,9 @@ const typesOfHousing = {
   palace: 'Дворец',
   hotel: 'Отель',
 };
+
+const cardTemplate = document.querySelector('#card').content;
+const popupCard = cardTemplate.querySelector('.popup');
 
 const renderFeatures = (features, container) => {
   if (features) {

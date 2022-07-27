@@ -2,23 +2,6 @@ import { sendForm } from './server.js';
 import { showSuccessPopup, showErrorPopup } from './form-popup.js';
 import { setDefaultState } from './map.js';
 
-const form = document.querySelector('.ad-form');
-const pristineForm = new Pristine(form, {
-  classTo: 'ad-form__element', // Элемент, на который будут добавляться классы
-  errorClass: 'ad-form__element--invalid', // Класс, обозначающий невалидное поле
-  successClass: 'ad-form__element--valid', // Класс, обозначающий валидное поле
-  errorTextParent: 'ad-form__element', // Элемент, куда будет выводиться текст с ошибкой
-  errorTextTag: 'span', // Тег, который будет обрамлять текст ошибки
-  errorTextClass: 'ad-form__error' // Класс для элемента с текстом ошибки
-});
-
-const titleForm = form.querySelector('#title');
-const priceForm = form.querySelector('#price');
-const roomNumForm = form.querySelector('#room_number');
-const capacityForm = form.querySelector('#capacity');
-const typeForm = form.querySelector('#type');
-const timeinForm = form.querySelector('#timein');
-const timeoutForm = form.querySelector('#timeout');
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_VALUE = 100000;
@@ -42,6 +25,24 @@ const capacityErrorMessage = {
   '100': 'Не для гостей',
 };
 
+const form = document.querySelector('.ad-form');
+const pristineForm = new Pristine(form, {
+  classTo: 'ad-form__element', // Элемент, на который будут добавляться классы
+  errorClass: 'ad-form__element--invalid', // Класс, обозначающий невалидное поле
+  successClass: 'ad-form__element--valid', // Класс, обозначающий валидное поле
+  errorTextParent: 'ad-form__element', // Элемент, куда будет выводиться текст с ошибкой
+  errorTextTag: 'span', // Тег, который будет обрамлять текст ошибки
+  errorTextClass: 'ad-form__error' // Класс для элемента с текстом ошибки
+});
+
+const titleForm = form.querySelector('#title');
+const priceForm = form.querySelector('#price');
+const roomNumForm = form.querySelector('#room_number');
+const capacityForm = form.querySelector('#capacity');
+const typeForm = form.querySelector('#type');
+const timeinForm = form.querySelector('#timein');
+const timeoutForm = form.querySelector('#timeout');
+
 const validateTitle = () => titleForm.value.length >= MIN_TITLE_LENGTH && titleForm.value.length <= MAX_TITLE_LENGTH;
 
 const validatePrice = () => priceForm.value <= MAX_PRICE_VALUE;
@@ -54,11 +55,11 @@ const getCapacityErrorMessage = () => capacityErrorMessage[roomNumForm.value];
 
 const getTypeErrorMessage = () => `Минимальная цена за ночь: ${minTypePrice[typeForm.value]} рублей.`;
 
-const roomCapacityChange = () => {
+const onRoomCapacityChange = () => {
   pristineForm.validate(roomNumForm);
 };
 
-const typePriceChange = () => {
+const onTypePriceChange = () => {
   pristineForm.validate(typeForm);
 };
 
@@ -67,8 +68,8 @@ pristineForm.addValidator(priceForm, validatePrice, `Максимальная ц
 pristineForm.addValidator(roomNumForm, validateCapacityNum, getCapacityErrorMessage);
 pristineForm.addValidator(typeForm, validateTypePrice, getTypeErrorMessage, false);
 
-[priceForm, capacityForm].forEach((item) => item.addEventListener('change', roomCapacityChange));
-[typeForm, capacityForm].forEach((item) => item.addEventListener('change', typePriceChange));
+[priceForm, capacityForm].forEach((item) => item.addEventListener('change', onRoomCapacityChange));
+[typeForm, capacityForm].forEach((item) => item.addEventListener('change', onTypePriceChange));
 
 timeinForm.addEventListener('change', () => {
   timeoutForm.value = timeinForm.value;

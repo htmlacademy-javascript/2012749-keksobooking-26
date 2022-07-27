@@ -39,6 +39,12 @@ const pinIcon = L.icon({
 });
 
 const form = document.querySelector('.ad-form');
+const resetButton = document.querySelector('.ad-form__reset');
+const addressForm = form.querySelector('#address');
+const filterMap = document.querySelector('.map__filters');
+const price = document.querySelector('#price');
+const type = document.querySelector('#type');
+const markers = [];
 
 const map = L.map('map-canvas');
 
@@ -65,14 +71,6 @@ const mainPinMarker = L.marker(
   },
 );
 
-const addressForm = form.querySelector('#address');
-addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
-addressForm.readOnly = true;
-
-const filterMap = document.querySelector('.map__filters');
-const price = document.querySelector('#price');
-const type = document.querySelector('#type');
-
 L.tileLayer(
   LeafletParameters.TILE_LAYER,
   {
@@ -80,19 +78,11 @@ L.tileLayer(
   },
 ).addTo(map);
 
-mainPinMarker.addTo(map);
-
 const updateAddress = (location) => {
   const lat = location.lat.toFixed(COORDINATE_ROUNDING);
   const lng = location.lng.toFixed(COORDINATE_ROUNDING);
   addressForm.value = `${lat} ${lng}`;
 };
-
-mainPinMarker.on('moveend', (evt) => {
-  updateAddress(evt.target.getLatLng());
-});
-
-const markers = [];
 
 const createPinAd = (ad) => {
   const marker = L.marker(ad.location, {icon: pinIcon});
@@ -138,6 +128,10 @@ const setDefaultState = () => {
     ZOOM_MAP);
   addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
   price.value = minTypePrice[type.value];
+  deletePins();
+  createLoader((json) => {
+    createPinGroup(json.slice(0, SIMILAR_AD_COUNT));
+  }, (error) => showMapError(error));
 };
 
 const resetMainPin = (marker) => {
@@ -151,7 +145,15 @@ const getResetForm = () => {
   setDefaultState();
 };
 
-const resetButton = document.querySelector('.ad-form__reset');
+addressForm.value = `${TOKYO.lat} ${TOKYO.lng}`;
+addressForm.readOnly = true;
+
+mainPinMarker.addTo(map);
+
+mainPinMarker.on('moveend', (evt) => {
+  updateAddress(evt.target.getLatLng());
+});
+
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   getResetForm();
