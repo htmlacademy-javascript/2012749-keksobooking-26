@@ -34,3 +34,5 @@ sliderElement.noUiSlider.on('update', () => {
 
 valueElement.placeholder = minTypePrice[type.value];
 valueElement.value = '';
+
+export {sliderElement};
